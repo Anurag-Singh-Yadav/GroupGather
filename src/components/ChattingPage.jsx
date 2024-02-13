@@ -32,11 +32,11 @@ const ChattingPage = ({
   }, [allMessages]);
 
   return (
-    <div className="relative flex flex-col justify-between min-h-[100vh] bg-green-300 ">
+    <div className="relative flex flex-col justify-between min-h-[100vh] bg-[#f5f6f7]">
       {/* Render all messages */}
       <div className="flex flex-col h-[92vh] overflow-y-auto">
         {allMessages.map((message, index) => (
-          <div className="text-black" key={index}>
+          <div className="" key={index}>
             {currUser === message.userName && (
               <div className="flex justify-end">
                 <ChatMessage message={message.message} userName= {message.userName}></ChatMessage>

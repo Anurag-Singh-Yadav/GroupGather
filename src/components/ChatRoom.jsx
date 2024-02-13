@@ -219,7 +219,7 @@ export default function ChatRoom() {
   }
 
   return (
-    <div className="text-white flex h-[100vh]">
+    <div className="flex h-[100vh]">
       <div className="flex fixed z-10 bg-[#252B48] left-0 top-0 h-[100vh] flex-col justify-between min-w-[230px] pl-3 pt-2">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
@@ -243,7 +243,7 @@ export default function ChatRoom() {
         </div>
       </div>
 
-      <div className="pl-[230px] w-full min-h-[100vh] bg-red-300">
+      <div className="pl-[230px] w-full min-h-[100vh]">
         <ChattingPage
           inputMessage={inputMessage}
           setInputMessages={setInputMessages}
