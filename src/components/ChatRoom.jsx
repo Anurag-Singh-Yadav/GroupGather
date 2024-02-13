@@ -139,13 +139,13 @@ import ChattingPage from "./ChattingPage";
 export default function ChatRoom() {
   const [clients, setClients] = useState([]);
   const [inputMessage, setInputMessages] = useState("");
-  const [allMessages, setAllMessages] = useState([]); // State for all messages
-
+  const [allMessages, setAllMessages] = useState([]); 
   const location = useLocation();
   const socketRef = useRef(null);
   const reactNavigate = useNavigate();
   const { roomId } = useParams();
-
+  const [currUser ,setCurrUser] = useState(null);
+  // setCurrUser(location.state?.userName);
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
@@ -162,7 +162,7 @@ export default function ChatRoom() {
         roomId,
         userName: location.state?.userName,
       });
-
+  setCurrUser(location.state?.userName);
       socketRef.current.on(ACTIONS.JOINED, ({ allClients, userName, socketId }) => {
         if (userName !== location.state?.userName) {
           toast.info(`${userName} joined`);
@@ -219,8 +219,8 @@ export default function ChatRoom() {
   }
 
   return (
-    <div className="text-white flex min-h-[100vh] gap-5">
-      <div className="flex flex-col justify-between min-w-[220px] pl-3 pt-2">
+    <div className="text-white flex h-[100vh]">
+      <div className="flex fixed z-10 bg-[#252B48] left-0 top-0 h-[100vh] flex-col justify-between min-w-[230px] pl-3 pt-2">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             <img src="/Code Merge.png" alt="" width="50" />
@@ -243,11 +243,12 @@ export default function ChatRoom() {
         </div>
       </div>
 
-      <div className="w-full min-h-[100vh] bg-red-300">
+      <div className="pl-[230px] w-full min-h-[100vh] bg-red-300">
         <ChattingPage
           inputMessage={inputMessage}
           setInputMessages={setInputMessages}
           sendMessage={sendMessage}
+          currUser={currUser}
           allMessages={allMessages} // Pass allMessages to ChattingPage
         />
       </div>
