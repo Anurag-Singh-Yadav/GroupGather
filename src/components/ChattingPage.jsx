@@ -1,5 +1,14 @@
 import React, { useEffect, useRef } from "react";
 
+function ChatMessage({ userName, message }) {
+  return (
+    <div className="flex flex-col">
+      <div>{userName} </div>
+      <div className=" bg-slate-300 rounded-lg py-2 px-4">{message}</div>
+    </div>
+  );
+}
+
 const ChattingPage = ({
   inputMessage,
   setInputMessages,
@@ -30,17 +39,13 @@ const ChattingPage = ({
           <div className="text-black" key={index}>
             {currUser === message.userName && (
               <div className="flex justify-end">
-                <div className="flex flex-col">
-                  <div>{message.userName} </div>
-                  <div className="bg-red-500">{message.message}</div>
-                </div>
+                <ChatMessage message={message.message} userName= {message.userName}></ChatMessage>
               </div>
             )}
             {currUser !== message.userName && (
-              <div className="w-fit">
-                <div>{message.userName} </div>
-                <div className="bg-blue-500">{message.message}</div>
-              </div>
+              <div className="flex justify-start">
+              <ChatMessage message={message.message} userName= {message.userName}></ChatMessage>
+            </div>
             )}
           </div>
         ))}
