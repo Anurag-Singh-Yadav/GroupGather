@@ -1,18 +1,28 @@
-import React, { useState } from 'react'
+// ChattingPage.jsx
 
-function ChattingPage({messages, setMessages}) {
+import React from "react";
+
+const ChattingPage = ({ inputMessage, setInputMessages, sendMessage, allMessages }) => {
   return (
-    <div className='relative h-[100vh] bg-green-500 overflow-y-auto'>
-        <div className='absolute bottom-1 w-full bg-blue-400 flex'>
-          <input
-          className='text-black w-full py-2 px-4'
-          onChange={(e) => setMessages(e.target.value)}
-          value={messages}
-          ></input>
-          <div className='px-4 py-3'>send</div>
+    <div>
+      {/* Render all messages */}
+      {allMessages.map((message, index) => (
+        <div key={index}>
+          <span>{message.userName}: </span>
+          <span>{message.message}</span>
         </div>
+      ))}
+      
+      {/* Input field for sending new messages */}
+      <input 
+        type="text" 
+        className="text-black"
+        value={inputMessage} 
+        onChange={(e) => setInputMessages(e.target.value)} 
+      />
+      <button onClick={sendMessage}>Send</button>
     </div>
-  )
-}
+  );
+};
 
-export default ChattingPage
+export default ChattingPage;

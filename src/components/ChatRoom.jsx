@@ -5,134 +5,123 @@ import { Navigate, useLocation, useNavigate, useParams } from "react-router";
 import ACTIONS from "../action";
 import { toast } from "react-toastify";
 import ChattingPage from "./ChattingPage";
+
 export default function ChatRoom() {
-
-  const [clients, setCLients] = useState([]);
-
-  const [messages, setMessages] = useState("");
-
-  const codeRef = useRef(null);
+  const [clients, setClients] = useState([]);
+  const [inputMessage, setInputMessages] = useState("");
+  const [allMessages, setAllMessages] = useState([]); // State for all messages
 
   const location = useLocation();
-
   const socketRef = useRef(null);
-
   const reactNavigate = useNavigate();
-
   const { roomId } = useParams();
 
   useEffect(() => {
-    
     const init = async () => {
-
-      // this line is use for the connection of frontend to backend server
       socketRef.current = await initSocket();
 
-      
       socketRef.current.on("connection_error", (err) => handleError(err));
-
       socketRef.current.on("connection_failed", (err) => handleError(err));
-
 
       function handleError(err) {
         console.log(err);
         reactNavigate("/");
       }
 
-      // sending message to the server with username and roomid
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId,
         userName: location.state?.userName,
       });
 
-
-      // listing events
-
-      socketRef.current.on(
-        ACTIONS.JOINED,
-        ({ allClients, userName, socketId }) => {
-          if (userName !== location.state?.userName) {
-            toast.info(`${userName} joined`)
-            // console.log(`${userName} joined`);
-          }
-          setCLients(allClients);
-          socketRef.current.emit(ACTIONS.SYNC_CODE,{
-            code: codeRef.current,
-            socketId,
-          })
+      socketRef.current.on(ACTIONS.JOINED, ({ allClients, userName, socketId }) => {
+        if (userName !== location.state?.userName) {
+          toast.info(`${userName} joined`);
         }
-      );
-
-      // listing for disconnections
+        setClients(allClients);
+      });
 
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, userName }) => {
         toast.info(`${userName} left`);
-        setCLients((prev) => {
-          return prev.filter((client) => client.socketId !== socketId);
-        });
+        setClients((prev) => prev.filter((client) => client.socketId !== socketId));
+      });
+
+      // Listen for incoming messages and update allMessages state
+      socketRef.current.on(ACTIONS.MESSAGE_RECEIVED, (message) => {
+        setAllMessages((prevMessages) => [...prevMessages, message]);
       });
     };
 
     init();
+
     return () => {
       socketRef.current?.disconnect();
       socketRef.current?.off(ACTIONS.JOINED);
       socketRef.current?.off(ACTIONS.DISCONNECTED);
+      socketRef.current?.off(ACTIONS.MESSAGE_RECEIVED); // Clean up event listener
     };
+  }, [roomId, location.state?.userName]);
 
-  },[]);
+  const sendMessage = async () => {
+    if (inputMessage.trim() === "") return;
 
-  function leaveRoom(){
+    socketRef.current.emit(ACTIONS.MESSAGE_RECEIVED, {
+      roomId,
+      message: inputMessage,
+      userName: location.state?.userName,
+    });
+    setInputMessages("");
+  };
+
+  function leaveRoom() {
     reactNavigate("/");
   }
 
-    async function copyRoomId(){
-      try{
-
-        await navigator.clipboard.writeText(roomId);
-        toast.success('Room copied successfully');
-
-      }catch(e){
-        console.log("Error", e);
-      }
+  async function copyRoomId() {
+    try {
+      await navigator.clipboard.writeText(roomId);
+      toast.success("Room copied successfully");
+    } catch (e) {
+      console.log("Error", e);
     }
-
-  if (!location.state) {
-    <Navigate to="/"></Navigate>;
   }
 
-  // components
-
+  if (!location.state) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="text-white flex min-h-[100vh] gap-5">
-    <div className="flex flex-col justify-between min-w-[220px] pl-3 pt-2">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col justify-between min-w-[220px] pl-3 pt-2">
         <div className="flex flex-col gap-2">
-          <img src="/Code Merge.png" alt="" width="50"></img>
-          <div className="h-[0.1rem] bg-white"></div>
+          <div className="flex flex-col gap-2">
+            <img src="/Code Merge.png" alt="" width="50" />
+            <div className="h-[0.1rem] bg-white"></div>
+          </div>
+          <h1>Connected</h1>
+          <div className="flex gap-3 flex-wrap">
+            {clients.map((client) => (
+              <Client key={client.socketId} userName={client.userName} />
+            ))}
+          </div>
         </div>
-        <h1>Connected</h1>
-        <div className="flex gap-3 flex-wrap">
-          {clients.map((clients, i) => (
-            <Client key={clients.userNo} userName={clients.userName}></Client>
-          ))}
+        <div className="flex flex-col justify-start mb-3 gap-3">
+          <button className="bg-green-500 text-lg rounded-md px-3 py-2" onClick={copyRoomId}>
+            Copy Room Id
+          </button>
+          <button className="bg-white text-black text-lg rounded-md px-3 py-2" onClick={leaveRoom}>
+            Leave Room
+          </button>
         </div>
       </div>
-      <div className="flex flex-col justify-start mb-3 gap-3">
-        <button className="bg-green-500 text-lg rounded-md px-3 py-2" onClick={copyRoomId}>
-          Copy Room Id
-        </button>
-        <button className="bg-white text-black text-lg rounded-md px-3 py-2" onClick={leaveRoom}>
-          Leave Room
-        </button>
+
+      <div className="w-full min-h-[100vh] bg-red-300">
+        <ChattingPage
+          inputMessage={inputMessage}
+          setInputMessages={setInputMessages}
+          sendMessage={sendMessage}
+          allMessages={allMessages} // Pass allMessages to ChattingPage
+        />
       </div>
     </div>
-
-    <div className="w-full min-h-[100vh] bg-red-300">
-      <ChattingPage messages={messages} setMessages={setMessages}></ChattingPage>
-    </div>
-
-  </div>
   );
 }
