@@ -1,47 +1,49 @@
 <h1>Group Chat App</h1>
-Description<br>
+
+<h2>Description</h2>
 <p>This is a group chat web application where users can join chat rooms, send messages, and interact with other users in real-time.</p>
 
 <h3>Features</h3>
-<h2>Multiple Chat Rooms</h2>: <p>Users can create or join existing chat rooms based on their interests or topics.</p>
-<h2>Real-time Messaging</h2>: Messages are delivered instantly to all users within the same chat room.
-<h2>Message History</h2>: Chat rooms maintain a history of messages, allowing users to view past conversations.
-<h2>Responsive Design</h2>: The application is designed to work seamlessly across different devices and screen sizes.<br>
-Technologies Used
-Frontend: React.js
-Backend: Node.js, Express.js
-Real-time Communication: Socket.IO<br>
-Getting Started
-Prerequisites
-Node.js installed on your machine
-Installation
-Clone the repository:
+<ul>
+  <li>Multiple Chat Rooms: Users can create or join existing chat rooms based on their interests or topics.</li>
+  <li>Real-time Messaging: Messages are delivered instantly to all users within the same chat room.</li>
+  <li>Message History: Chat rooms maintain a history of messages, allowing users to view past conversations.</li>
+  <li>Responsive Design: The application is designed to work seamlessly across different devices and screen sizes.</li>
+</ul>
 
-bash
-Copy code
-git clone https://github.com/your_username/group-chat-app.git
-Navigate to the project directory:
+<h3>Technologies Used</h3>
+<ul>
+  <li>Frontend: React.js</li>
+  <li>Backend: Node.js, Express.js</li>
+  <li>Real-time Communication: Socket.IO</li>
+</ul>
 
-bash
-Copy code
+<h2>Getting Started</h2>
+
+<h3>Prerequisites</h3>
+<ul>
+  <li>Node.js installed on your machine</li>
+</ul>
+
+<h3>Installation</h3>
+<ol>
+  <li>Clone the repository:</li>
+</ol>
+
+git clone https://github.com/Anurag-Singh-Yadav/GroupGather
+
+<ol start="2">
+  <li>Navigate to the project directory:</li>
+</ol>
 cd group-chat-app
-Install dependencies:
-
-bash
-Copy code
+<ol start="3">
+  <li>Install dependencies:</li>
+</ol>
 npm install
-Usage
-Start the server:
 
-bash
-Copy code
+<ol>
+  <li>Start the server:</li>
+</ol>
 npm start
-Access the application in your web browser:
 
-bash
-Copy code
-http://localhost:3000
-Sign up or log in to start chatting with other users.
 
-Contributing
-Contributions are welcome! If you have any suggestions or improvements, feel free to open an issue or create a pull request.
