@@ -1,4 +1,4 @@
-Group Chat App
+<h1>Group Chat App</h1>
 Description
 This is a group chat web application where users can join chat rooms, send messages, and interact with other users in real-time.
 
