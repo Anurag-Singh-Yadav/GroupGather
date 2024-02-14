@@ -22,17 +22,14 @@ const ChattingPage = ({
   allMessages,
   currUser,
 }) => {
-  // Ref for the chat messages container
   const messagesEndRef = useRef(null);
 
-  // Function to scroll the messages container to the bottom
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  // Scroll to bottom when new messages are added or component updates
   useEffect(() => {
     scrollToBottom();
   }, [allMessages]);
@@ -62,7 +59,6 @@ const ChattingPage = ({
               )}
             </div>
           ))}
-          {/* Empty div to scroll to when new messages are added */}
           <div ref={messagesEndRef} />
         </div>
       </div>
