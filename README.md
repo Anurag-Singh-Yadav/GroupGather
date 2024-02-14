@@ -1,12 +1,12 @@
 <h1>Group Chat App</h1>
-Description
-This is a group chat web application where users can join chat rooms, send messages, and interact with other users in real-time.
+Description<br>
+<p>This is a group chat web application where users can join chat rooms, send messages, and interact with other users in real-time.</p>
 
-Features
-Multiple Chat Rooms: Users can create or join existing chat rooms based on their interests or topics.
-Real-time Messaging: Messages are delivered instantly to all users within the same chat room.
-Message History: Chat rooms maintain a history of messages, allowing users to view past conversations.
-Responsive Design: The application is designed to work seamlessly across different devices and screen sizes.<br>
+<h3>Features</h3>
+<h2>Multiple Chat Rooms</h2>: <p>Users can create or join existing chat rooms based on their interests or topics.</p>
+<h2>Real-time Messaging</h2>: Messages are delivered instantly to all users within the same chat room.
+<h2>Message History</h2>: Chat rooms maintain a history of messages, allowing users to view past conversations.
+<h2>Responsive Design</h2>: The application is designed to work seamlessly across different devices and screen sizes.<br>
 Technologies Used
 Frontend: React.js
 Backend: Node.js, Express.js
