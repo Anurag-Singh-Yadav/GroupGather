@@ -219,13 +219,9 @@ export default function ChatRoom() {
   }
 
   return (
-    <div className="flex h-[100vh]">
-      <div className="flex fixed z-10 bg-[#252B48] left-0 top-0 h-[100vh] flex-col justify-between min-w-[230px] pl-3 pt-2">
+    <div className="flex flex-col sm:flex-row h-[100vh]">
+      <div className="flex sm:fixed z-10 bg-[#252B48] left-0 top-0 h-[100vh] flex-col text-white justify-between min-w-[230px] px-3 pt-2">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-2">
-            <img src="/Code Merge.png" alt="" width="50" />
-            <div className="h-[0.1rem] bg-white"></div>
-          </div>
           <h1>Connected</h1>
           <div className="flex gap-3 flex-wrap">
             {clients.map((client) => (
@@ -243,7 +239,7 @@ export default function ChatRoom() {
         </div>
       </div>
 
-      <div className="pl-[230px] w-full min-h-[100vh]">
+      <div className="sm:pl-[230px] w-full min-h-[100vh]">
         <ChattingPage
           inputMessage={inputMessage}
           setInputMessages={setInputMessages}

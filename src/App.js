@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import ChatRoom from "./components/ChatRoom";
 function App() {
   return (
-    <div className="App bg-[#252B48] min-h-[100vh] overflow-hidden">
+    <div className="App bg-[#252B48] min-h-[100vh] sm:overflow-hidden">
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
         <Route
